@@ -183,7 +183,7 @@ export default function App() {
     let cancelled = false;
     (async () => {
       try {
-        const res = await fetch("/bono.json");
+        const res = await fetch("./bono.json");
         if (!res.ok) throw new Error("HTTP " + res.status);
         const data = await res.json();
         if (!cancelled && Array.isArray(data.categorias))
@@ -217,7 +217,7 @@ export default function App() {
         }
 
         // Load static data from bono.json
-        const res = await fetch("/bono.json");
+        const res = await fetch("./bono.json");
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
         const json = await res.json();
