@@ -4,15 +4,16 @@
   "version": "0.1.0",
   "type": "module",
   "description": "Comercios adheridos al bono comercio de Valencia",
+  "packageManager": "pnpm@8.15.0",
   "scripts": {
-    "dev": "cd web && vite",
-    "dev:lan": "cd web && vite --host 0.0.0.0",
+    "dev": "vite",
+    "dev:lan": "vite --host 0.0.0.0",
     "generate-data": "node scripts/generate-data.js",
-    "prebuild": "npm run generate-data",
-    "build": "cd web && vite build",
-    "build:github": "npm run generate-data && cd web && vite build",
-    "preview": "cd web && vite preview",
-    "preview:lan": "cd web && vite preview --host 0.0.0.0"
+    "prebuild": "pnpm run generate-data",
+    "build": "vite build",
+    "build:github": "pnpm run generate-data && vite build",
+    "preview": "vite preview",
+    "preview:lan": "vite preview --host 0.0.0.0"
   },
   "dependencies": {
     "react": "^18.3.1",

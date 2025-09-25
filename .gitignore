@@ -8,7 +8,6 @@ lerna-debug.log*
 
 # Build outputs
 dist/
-web/dist/
 dist-ssr/
 *.local
 
@@ -44,4 +43,4 @@ coverage/
 .vite/
 
 # Generated data files (will be regenerated)
-web/public/bono.json
+public/bono.json

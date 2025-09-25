@@ -225,31 +225,34 @@ async function generateBonoData() {
   try {
     const { data: html } = await axios.get(SOURCE_URL, {
       headers: {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
       },
       timeout: 30000,
     });
-    
+
     const rawData = parseComercios(html);
     const dataWithCustomCats = addCustomCategories(rawData);
-    
+
     const allCustomCats = new Set();
-    dataWithCustomCats.forEach(cat => 
-      cat.comercios.forEach(c => allCustomCats.add(c.customCategoria))
+    dataWithCustomCats.forEach((cat) =>
+      cat.comercios.forEach((c) => allCustomCats.add(c.customCategoria))
     );
-    
+
     const finalData = {
       meta: {
         lastUpdated: Date.now(),
-        totalComercios: dataWithCustomCats.reduce((sum, cat) => sum + cat.comercios.length, 0),
+        totalComercios: dataWithCustomCats.reduce(
+          (sum, cat) => sum + cat.comercios.length,
+          0
+        ),
         generatedAt: new Date().toISOString(),
       },
       categorias: Array.from(allCustomCats).sort(),
       data: dataWithCustomCats,
     };
-    
+
     return finalData;
-    
   } catch (error) {
     throw error;
   }
@@ -257,17 +260,16 @@ async function generateBonoData() {
 
 async function main() {
   const __dirname = dirname(fileURLToPath(import.meta.url));
-  const outputPath = resolve(__dirname, "../web/public/bono.json");
-  
+  const outputPath = resolve(__dirname, "../public/bono.json");
+
   try {
     const publicDir = dirname(outputPath);
     if (!fs.existsSync(publicDir)) {
       fs.mkdirSync(publicDir, { recursive: true });
     }
-    
+
     const data = await generateBonoData();
     fs.writeFileSync(outputPath, JSON.stringify(data, null, 2));
-    
   } catch (error) {
     process.exit(1);
   }

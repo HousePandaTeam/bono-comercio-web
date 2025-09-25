@@ -186,7 +186,8 @@ export default function App() {
         const res = await fetch("/bono.json");
         if (!res.ok) throw new Error("HTTP " + res.status);
         const data = await res.json();
-        if (!cancelled && Array.isArray(data.categorias)) setAllCats(data.categorias);
+        if (!cancelled && Array.isArray(data.categorias))
+          setAllCats(data.categorias);
       } catch {
         // fallback silently; selector will use current data categories
       }
@@ -214,11 +215,11 @@ export default function App() {
             setHasPrefill(true);
           }
         }
-        
+
         // Load static data from bono.json
         const res = await fetch("/bono.json");
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        
+
         const json = await res.json();
         if (!cancelled) {
           // No geo info for static data
@@ -226,23 +227,29 @@ export default function App() {
             queued: 0,
             cacheSize: 0,
           });
-          
+
           // Get the data array and filter by selected criteria
           let filteredData = Array.isArray(json.data) ? json.data : [];
-          
+
           // Filter by categoria if selected
           if (categoria) {
-            filteredData = filteredData.filter(cat => cat.categoria === categoria);
+            filteredData = filteredData.filter(
+              (cat) => cat.categoria === categoria
+            );
           }
-          
+
           // Filter by custom category if selected
           if (customCat) {
-            filteredData = filteredData.map(cat => ({
-              categoria: cat.categoria,
-              comercios: cat.comercios.filter(c => c.customCategoria === customCat)
-            })).filter(cat => cat.comercios.length > 0);
+            filteredData = filteredData
+              .map((cat) => ({
+                categoria: cat.categoria,
+                comercios: cat.comercios.filter(
+                  (c) => c.customCategoria === customCat
+                ),
+              }))
+              .filter((cat) => cat.comercios.length > 0);
           }
-          
+
           setData(filteredData);
           // Update local caches
           updateCoordsCacheFromData(filteredData);

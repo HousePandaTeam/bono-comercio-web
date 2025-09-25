@@ -28,7 +28,7 @@ La aplicación está desplegada en GitHub Pages: https://housepandateam.github.i
 ### Requisitos previos
 
 - Node.js 18+
-- npm
+- pnpm
 
 ### Instalación
 
@@ -38,26 +38,26 @@ git clone git@github.com-personal:HousePandaTeam/bono-comercio-web.git
 cd bono-comercio-web
 
 # Instalar dependencias
-npm install
+pnpm install
 ```
 
 ### Scripts disponibles
 
 ```bash
 # Desarrollo local
-npm run dev                 # Inicia el servidor de desarrollo
-npm run dev:lan            # Servidor de desarrollo accesible desde la red local
+pnpm dev                 # Inicia el servidor de desarrollo
+pnpm dev:lan            # Servidor de desarrollo accesible desde la red local
 
 # Generar datos
-npm run generate-data      # Obtiene los últimos datos de comercios
+pnpm generate-data      # Obtiene los últimos datos de comercios
 
 # Construcción
-npm run build              # Build para producción (incluye generación de datos)
-npm run build:github      # Build específico para GitHub Pages
+pnpm build              # Build para producción (incluye generación de datos)
+pnpm build:github      # Build específico para GitHub Pages
 
 # Vista previa
-npm run preview            # Vista previa del build
-npm run preview:lan       # Vista previa accesible desde la red local
+pnpm preview            # Vista previa del build
+pnpm preview:lan       # Vista previa accesible desde la red local
 ```
 
 ### Estructura del proyecto
@@ -66,12 +66,13 @@ npm run preview:lan       # Vista previa accesible desde la red local
 ├── .github/workflows/     # GitHub Actions para despliegue automático
 ├── scripts/              # Scripts de utilidad
 │   └── generate-data.js  # Obtiene datos de comercios
-├── web/                  # Aplicación web
-│   ├── public/          # Archivos públicos (donde se genera bono.json)
-│   ├── src/             # Código fuente React
-│   ├── index.html       # HTML principal
-│   └── vite.config.js   # Configuración de Vite
-├── package.json         # Dependencias y scripts principales
+├── public/              # Archivos públicos (donde se genera bono.json)
+├── src/                 # Código fuente React
+├── index.html           # HTML principal  
+├── vite.config.js       # Configuración de Vite
+├── tailwind.config.js   # Configuración de Tailwind
+├── postcss.config.js    # Configuración de PostCSS
+├── package.json         # Dependencias y scripts
 └── README.md           # Este archivo
 ```
 

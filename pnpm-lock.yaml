@@ -6,7 +6,42 @@ settings:
 
 importers:
 
-  .: {}
+  .:
+    dependencies:
+      axios:
+        specifier: ^1.7.7
+        version: 1.11.0
+      cheerio:
+        specifier: ^1.0.0-rc.12
+        version: 1.1.2
+      leaflet:
+        specifier: ^1.9.4
+        version: 1.9.4
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.3.1
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@vitejs/plugin-react':
+        specifier: ^4.3.1
+        version: 4.7.0(vite@5.4.19)
+      autoprefixer:
+        specifier: ^10.4.20
+        version: 10.4.21(postcss@8.5.6)
+      eslint:
+        specifier: ^8.57.0
+        version: 8.57.1
+      postcss:
+        specifier: ^8.4.47
+        version: 8.5.6
+      tailwindcss:
+        specifier: ^3.4.10
+        version: 3.4.17
+      vite:
+        specifier: ^5.4.8
+        version: 5.4.19
 
   server:
     dependencies:
