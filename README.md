@@ -68,7 +68,7 @@ pnpm preview:lan       # Vista previa accesible desde la red local
 │   └── generate-data.js  # Obtiene datos de comercios
 ├── public/              # Archivos públicos (donde se genera bono.json)
 ├── src/                 # Código fuente React
-├── index.html           # HTML principal  
+├── index.html           # HTML principal
 ├── vite.config.js       # Configuración de Vite
 ├── tailwind.config.js   # Configuración de Tailwind
 ├── postcss.config.js    # Configuración de PostCSS

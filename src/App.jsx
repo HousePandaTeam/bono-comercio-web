@@ -261,7 +261,7 @@ export default function App() {
       } catch (e) {
         if (!cancelled)
           setError(
-            "No se pudo cargar el listado. Intenta nuevamente más tarde."
+            "Error al cargar los datos. Verifica tu conexión a internet."
           );
       } finally {
         if (!cancelled) setLoading(false);
