@@ -426,10 +426,10 @@ function MapView({ data, categoria, geoInfo, onRetry, loading }) {
           <div className='flex items-start gap-3'>
             <div className='mt-1 h-3 w-3 rounded-full bg-yellow-400 animate-pulse' />
             <div>
-              <div className='font-semibold'>Obteniendo coordenadas…</div>
+              <div className='font-semibold'>Cargando mapa...</div>
               <div className='text-sm text-gray-600 mt-1'>
                 {totalShops > 0
-                  ? `Estamos localizando ${totalShops} comercio(s) en el mapa. Esto puede tardar unos segundos.`
+                  ? `Mostrando ${totalShops} comercio(s) en el mapa.`
                   : "No hay comercios para esta selección."}
               </div>
               {(geoInfo?.queued ?? 0) > 0 && (
