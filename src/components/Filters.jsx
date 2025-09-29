@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Map, List, Settings, Home } from "lucide-react";
+import { Map, List, Settings, Home, Wallet } from "lucide-react";
 
 export default function Filters({
   view,
@@ -17,7 +17,15 @@ export default function Filters({
   return (
     <div className='flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-4'>
       <div className='flex items-center gap-2'>
-        <h1 className='text-2xl font-bold flex-1'>Comercios adheridos</h1>
+        <a
+          href='https://www.tutarjetaregalo.com/#/login'
+          target='_blank'
+          rel='noopener noreferrer'
+          className='p-2 rounded border bg-white text-gray-700 border-gray-300 hover:bg-blue-50 flex items-center'
+        >
+          <Wallet size={22} />
+        </a>
+        <h1 className='text-2xl font-bold flex-1'>VLC - B.Comercio</h1>
         <button
           onClick={() => setView("list")}
           className={`p-2 rounded border ${
