@@ -14,6 +14,18 @@ export default function Filters({
   setQ,
 }) {
   const [useCustom, setUseCustom] = useState(true);
+  const priorityCats = [
+    "Supermercados",
+    "Carnicería",
+    "Pescadería",
+    "Frutería",
+    "Horno y panadería",
+  ];
+
+  const sortedCustomCats = [
+    ...priorityCats.filter((cat) => customCats.includes(cat)),
+    ...customCats.filter((cat) => !priorityCats.includes(cat)),
+  ];
 
   return (
     <div className='flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-4'>
@@ -117,13 +129,11 @@ export default function Filters({
           className='px-3 py-2 border border-gray-300 rounded bg-white'
         >
           <option value=''>Categorías personalizadas</option>
-          {(customCats && customCats.length ? customCats : []).map(
-            (name, i) => (
-              <option key={`${name}-${i}`} value={name}>
-                {name}
-              </option>
-            )
-          )}
+          {(sortedCustomCats.length ? sortedCustomCats : []).map((name, i) => (
+            <option key={`${name}-${i}`} value={name}>
+              {name}
+            </option>
+          ))}
         </select>
       )}
     </div>
