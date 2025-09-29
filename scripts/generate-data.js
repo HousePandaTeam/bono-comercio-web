@@ -247,7 +247,6 @@ function classifyCustom(nombre = "", web = "") {
       "pizzeria",
       "heladeria",
       "gelato",
-      "pasteleria",
       "chocolateria",
       "tapas",
       "comida para llevar",
@@ -378,6 +377,7 @@ function addCustomCategories(data) {
     comercios: cat.comercios.map((c) => ({
       ...c,
       customCategoria: classifyCustom(c.nombre, c.web),
+      categoriaOriginal: cat.categoria,
     })),
   }));
 }
@@ -486,10 +486,19 @@ async function generateBonoData() {
       }
     });
 
-    const allCustomCats = new Set();
-    dataWithCoords.forEach((cat) =>
-      cat.comercios.forEach((c) => allCustomCats.add(c.customCategoria))
-    );
+    // Categorías originales (de bono comercio)
+    const categoriasOriginales = Array.from(
+      new Set(dataWithCoords.map((cat) => cat.categoria))
+    ).sort();
+
+    // Categorías personalizadas (custom)
+    const customCategorias = Array.from(
+      new Set(
+        dataWithCoords.flatMap((cat) =>
+          cat.comercios.map((c) => c.customCategoria)
+        )
+      )
+    ).sort();
 
     const finalData = {
       meta: {
@@ -500,7 +509,8 @@ async function generateBonoData() {
         ),
         generatedAt: new Date().toISOString(),
       },
-      categorias: Array.from(allCustomCats).sort(),
+      categorias: categoriasOriginales,
+      customCategorias,
       data: dataWithCoords,
     };
 
