@@ -3,20 +3,27 @@ import React, { useEffect, useState } from "react";
 import LeafletMapTooltip from "./LeafletMapTooltip";
 
 const CUSTOM_COLORS = {
-  Carnicería: "#D32F2F",
-  Frutería: "#388E3C",
-  Pescadería: "#1976D2",
-  "Horno y panadería": "#EF6C00",
-  "Mercado municipal": "#6D4C41",
-  Óptica: "#7B1FA2",
-  Peluquería: "#EC407A",
+  ALIMENTACIÓN: "#43A047",
+  "Bares y restauración": "#FF7043",
+  Bodegas: "#8D6E63",
   Calzado: "#5C6BC0",
-  Perfumería: "#8D6E63",
+  Carnicería: "#D32F2F",
+  ELECTRODOMÉSTICOS: "#0288D1",
+  Frutería: "#388E3C",
   "Hogar y decoración": "#455A64",
-  Librerías: "#0097A7",
+  "Horno y panadería": "#EF6C00",
   Jugueterías: "#FBC02D",
-  "Tienda mascotas": "#00796B",
+  Librerías: "#0097A7",
+  "Mercado municipal": "#6D4C41",
+  "Moda y complementos": "#AB47BC",
   Otros: "#9E9E9E",
+  Peluquería: "#EC407A",
+  Perfumería: "#8D6E63",
+  Pescadería: "#1976D2",
+  Salud: "#00897B",
+  "Tienda ecológica": "#7CB342",
+  "Tienda mascotas": "#00796B",
+  Óptica: "#7B1FA2",
 };
 
 const colorForCategory = (name = "") => CUSTOM_COLORS[name] || "#9E9E9E";
