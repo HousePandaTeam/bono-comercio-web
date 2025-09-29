@@ -229,7 +229,10 @@ async function getGoogleMapsCoords(mapsUrl, debug = false) {
 }
 
 function classifyCustom(nombre = "", web = "") {
-  const text = (nombre + " " + web).toLowerCase();
+  const text = (nombre + " " + web)
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
   const hay = (terms) => terms.some((t) => text.includes(t.toLowerCase()));
 
   if (
@@ -315,7 +318,19 @@ function classifyCustom(nombre = "", web = "") {
     ])
   )
     return "Carnicería";
-  if (hay(["fruteria", "frutas", "verduras", "verdura", "fruits i verdures"]))
+  if (
+    hay([
+      "fruteria",
+      "frutas",
+      "verduras",
+      "verdura",
+      "fruits i verdures",
+      "fruites",
+      "hortalisses",
+      "hortalizas",
+      "verdures",
+    ])
+  )
     return "Frutería";
   if (
     hay([
@@ -368,7 +383,20 @@ function classifyCustom(nombre = "", web = "") {
     return "Jugueterías";
   if (hay(["mascotas", "veterinario", "veterinaria", "piensos", "zoo"]))
     return "Tienda mascotas";
+  if (hay(["biotic", "herbolario", "ecologico", "ecologica", "eco", "bio"]))
+    return "Tienda ecológica";
+  if (hay(["bodega", "vino", "cerveza", "licores", "bebidas"]))
+    return "Bodegas";
   return "Otros";
+}
+
+function computeCustomCategory(name, web, categoria) {
+  const customCat = classifyCustom(name, web);
+  if (customCat === "Otros") {
+    if (categoria === "ALIMENTACIÓN" || categoria === "ELECTRODOMÉSTICOS")
+      return categoria;
+  }
+  return customCat;
 }
 
 function addCustomCategories(data) {
@@ -376,7 +404,7 @@ function addCustomCategories(data) {
     categoria: cat.categoria,
     comercios: cat.comercios.map((c) => ({
       ...c,
-      customCategoria: classifyCustom(c.nombre, c.web),
+      customCategoria: computeCustomCategory(c.nombre, c.web, cat.categoria),
       categoriaOriginal: cat.categoria,
     })),
   }));
