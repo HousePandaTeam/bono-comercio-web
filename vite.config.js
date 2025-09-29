@@ -9,6 +9,11 @@ export default defineConfig({
     port: 5173,
     // Remove API proxy since we're using static files
   },
+  resolve: {
+    alias: {
+      "@": "/src",
+    },
+  },
   build: {
     outDir: "dist",
     assetsDir: "assets",

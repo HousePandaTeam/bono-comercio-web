@@ -1,5 +1,6 @@
 // LeafletMap.jsx
 import React, { useEffect, useState } from "react";
+import LeafletMapTooltip from "./LeafletMapTooltip";
 
 const CUSTOM_COLORS = {
   Carnicería: "#D32F2F",
@@ -29,6 +30,7 @@ export default function LeafletMap({
 }) {
   const [Lmod, setLmod] = useState(null);
   const [mapEl, setMapEl] = useState(null);
+  const [bottomSheet, setBottomSheet] = useState(null); // punto seleccionado para el panel
 
   useEffect(() => {
     let mounted = true;
@@ -81,14 +83,28 @@ export default function LeafletMap({
       if (typeof p.lat !== "number" || typeof p.lng !== "number") return;
       const catForColor = p.customCategoria || p.categoria;
       const marker = L.marker([p.lat, p.lng], { icon: makeIcon(catForColor) });
-      marker
-        .addTo(group)
-        .bindPopup(
-          `<strong>${p.nombre || ""}</strong><br/>${p.direccion || ""}${
-            p.customCategoria ? `<br/><em>${p.customCategoria}</em>` : ""
-          }`
-        );
-      marker.on("click", () => onSelect && onSelect(p));
+      // Popup con botón "Ver más"
+      const popupHtml = `
+        <strong>${p.nombre || ""}</strong><br/>${p.direccion || ""}${
+        p.customCategoria ? `<br/><em>${p.customCategoria}</em>` : ""
+      }<br/>
+        <button id="ver-mas-${p.lat}-${
+        p.lng
+      }" style="margin-top:6px;padding:4px 8px;background:#1976D2;color:white;border:none;border-radius:4px;cursor:pointer;">Ver más</button>
+      `;
+      marker.addTo(group).bindPopup(popupHtml);
+      marker.on("click", () => {
+        onSelect && onSelect(p);
+        setTimeout(() => {
+          const btn = document.getElementById(`ver-mas-${p.lat}-${p.lng}`);
+          if (btn) {
+            btn.onclick = (e) => {
+              e.preventDefault();
+              setBottomSheet(p);
+            };
+          }
+        }, 300);
+      });
     });
     group.addTo(map);
 
@@ -167,6 +183,11 @@ export default function LeafletMap({
             </div>
           </div>
         )}
+        {/* Bottom Sheet Panel extraído a componente modal */}
+        <LeafletMapTooltip
+          punto={bottomSheet}
+          onClose={() => setBottomSheet(null)}
+        />
       </div>
 
       <ul className='mt-3 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-2'>
@@ -174,7 +195,10 @@ export default function LeafletMap({
           <li
             key={`${c.maps_url || c.nombre}-${idx}`}
             className='text-sm bg-white p-2 rounded border cursor-pointer'
-            onClick={() => onSelect && onSelect(c)}
+            onClick={() => {
+              onSelect && onSelect(c);
+              setBottomSheet(c);
+            }}
           >
             <div className='font-semibold'>{c.nombre || "Sin nombre"}</div>
             {c.direccion && <div className='text-gray-600'>{c.direccion}</div>}

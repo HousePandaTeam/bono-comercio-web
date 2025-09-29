@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Map, List } from "lucide-react";
+import { Map, List, Settings, Home } from "lucide-react";
 
 export default function Filters({
   view,
@@ -12,13 +12,12 @@ export default function Filters({
   q,
   setQ,
 }) {
-  const [useCustom, setUseCustom] = useState(false);
+  const [useCustom, setUseCustom] = useState(true);
 
   return (
     <div className='flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-4'>
-      <h1 className='text-2xl font-bold flex-1'>Comercios adheridos</h1>
-
       <div className='flex items-center gap-2'>
+        <h1 className='text-2xl font-bold flex-1'>Comercios adheridos</h1>
         <button
           onClick={() => setView("list")}
           className={`p-2 rounded border ${
@@ -41,15 +40,52 @@ export default function Filters({
         </button>
       </div>
 
-      <div className='flex gap-2'>
-        <label className='flex items-center gap-1 text-sm'>
-          <input
-            type='checkbox'
-            checked={useCustom}
-            onChange={() => setUseCustom((v) => !v)}
+      <div className='flex items-center gap-2'>
+        <button
+          type='button'
+          className={`flex items-center px-2 py-1 rounded-full border transition-colors duration-200 ${
+            useCustom
+              ? "bg-blue-600 border-blue-600 text-white"
+              : "bg-white border-gray-300 text-gray-700"
+          }`}
+          onClick={() => {
+            setUseCustom((v) => {
+              // Resetear filtros al cambiar el switch
+              setCategoria("");
+              setCustomCat("");
+              setQ("");
+              return !v;
+            });
+          }}
+        >
+          <Settings
+            size={18}
+            className={`mr-1 ${useCustom ? "opacity-100" : "opacity-40"}`}
           />
-          Usar filtros personalizados
-        </label>
+          <div className='w-8 h-5 flex items-center bg-gray-200 rounded-full mx-1 relative'>
+            <div
+              className={`w-4 h-4 rounded-full bg-white shadow transition-transform duration-200 border ${
+                useCustom
+                  ? "translate-x-0 border-blue-600"
+                  : "translate-x-4 border-gray-400"
+              }`}
+              style={{
+                transform: useCustom ? "translateX(0)" : "translateX(16px)",
+              }}
+            />
+          </div>
+          <Home
+            size={18}
+            className={`ml-1 ${!useCustom ? "opacity-100" : "opacity-40"}`}
+          />
+        </button>
+        <input
+          type='search'
+          placeholder='Buscar por nombre o dirección...'
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          className='w-full sm:w-96 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500'
+        />
       </div>
 
       {!useCustom ? (
@@ -58,7 +94,7 @@ export default function Filters({
           onChange={(e) => setCategoria(e.target.value)}
           className='px-3 py-2 border border-gray-300 rounded bg-white'
         >
-          <option value=''>Todas las categorías</option>
+          <option value=''>Categorías por defecto</option>
           {(allCats.length ? allCats : []).map((name, i) => (
             <option key={`${name}-${i}`} value={name}>
               {name}
@@ -88,14 +124,6 @@ export default function Filters({
           <option value='Otros'>Otros</option>
         </select>
       )}
-
-      <input
-        type='search'
-        placeholder='Buscar por nombre o dirección...'
-        value={q}
-        onChange={(e) => setQ(e.target.value)}
-        className='w-full sm:w-96 px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500'
-      />
     </div>
   );
 }
