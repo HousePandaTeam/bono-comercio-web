@@ -8,6 +8,7 @@ export default function App() {
   const [categoria, setCategoria] = useState("");
   const [customCat, setCustomCat] = useState("");
   const [allCats, setAllCats] = useState([]);
+  const [customCats, setCustomCats] = useState([]);
   const [q, setQ] = useState("");
   const [view, setView] = useState("map");
 
@@ -17,6 +18,7 @@ export default function App() {
       const json = await res.json();
       setData(json.data);
       setAllCats(json.categorias);
+      setCustomCats(json.customCats);
     })();
   }, []);
 
@@ -77,6 +79,7 @@ export default function App() {
         customCat={customCat}
         setCustomCat={setCustomCat}
         allCats={allCats}
+        customCats={customCats}
         q={q}
         setQ={setQ}
       />

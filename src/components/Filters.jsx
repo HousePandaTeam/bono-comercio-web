@@ -9,6 +9,7 @@ export default function Filters({
   customCat,
   setCustomCat,
   allCats,
+  customCats,
   q,
   setQ,
 }) {
@@ -116,20 +117,13 @@ export default function Filters({
           className='px-3 py-2 border border-gray-300 rounded bg-white'
         >
           <option value=''>Categorías personalizadas</option>
-          <option value='Carnicería'>Carnicería</option>
-          <option value='Frutería'>Frutería</option>
-          <option value='Pescadería'>Pescadería</option>
-          <option value='Horno y panadería'>Horno y panadería</option>
-          <option value='Mercado municipal'>Mercado municipal</option>
-          <option value='Óptica'>Óptica</option>
-          <option value='Peluquería'>Peluquería</option>
-          <option value='Calzado'>Calzado</option>
-          <option value='Perfumería'>Perfumería</option>
-          <option value='Hogar y decoración'>Hogar y decoración</option>
-          <option value='Librerías'>Librerías</option>
-          <option value='Jugueterías'>Jugueterías</option>
-          <option value='Tienda mascotas'>Tienda mascotas</option>
-          <option value='Otros'>Otros</option>
+          {(customCats && customCats.length ? customCats : []).map(
+            (name, i) => (
+              <option key={`${name}-${i}`} value={name}>
+                {name}
+              </option>
+            )
+          )}
         </select>
       )}
     </div>
